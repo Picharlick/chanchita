@@ -5,32 +5,432 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestro Primer Año Juntos - Para María</title>
     <meta name="description" content="Una galería de amor interactiva con nuestros recuerdos más especiales">
-
-    <!-- Agrega estos meta tags para mejor compatibilidad -->
-    <meta property="og:title" content="Nuestro Primer Año Juntos">
-    <meta property="og:description" content="Una galería de amor interactiva con nuestros recuerdos más especiales">
-    <meta property="og:type" content="website">
-
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Tu CSS aquí (mantén todo tu estilo actual) -->
+    
     <style>
-        /* TODO TU CÓDIGO CSS ACTUAL */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        /* ... resto de tu CSS ... */
+
+        body {
+            background: linear-gradient(135deg, #ffd6e7 0%, #ffefef 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b9d, #c44569, #ff9ff3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #e91e63;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #673ab7;
+            margin-bottom: 20px;
+        }
+
+        .intro-text {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .heart {
+            color: #e91e63;
+            animation: pulse 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .months-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .month-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+            height: 320px;
+            perspective: 1000px;
+        }
+
+        .month-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .month-card.active .card-inner {
+            transform: rotateY(180deg);
+            cursor: default;
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            border-radius: 15px;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .card-back {
+            background: white;
+            color: #333;
+            transform: rotateY(180deg);
+            overflow-y: auto;
+        }
+
+        .month-number {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .month-title {
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .month-date {
+            font-style: italic;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .card-hint {
+            position: absolute;
+            bottom: 15px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            height: 70px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.7rem;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .memory-text {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #555;
+            background-color: #f9f9f9;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #e91e63;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: #e91e63;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+        }
+
+        .nav-btn:hover {
+            background: #c2185b;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .love-message {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #e91e63;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .months-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .month-card {
+                height: 280px;
+            }
+            
+            .month-number {
+                font-size: 3rem;
+            }
+            
+            .month-title {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 25px 15px;
+                margin-bottom: 25px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- TODO TU CÓDIGO HTML ACTUAL -->
+    <div class="container">
+        <header>
+            <h1>Nuestro Primer Año Juntos <span class="heart">❤</span></h1>
+            <p class="subtitle">12 meses de recuerdos inolvidables</p>
+            <div class="intro-text">
+                <p>Querida <strong>María</strong>,</p>
+                <p>Este año a tu lado ha sido el más maravilloso de mi vida. Cada mes hemos creado recuerdos que atesoraré para siempre.</p>
+                <p>Con todo mi amor, <strong>Carlos</strong></p>
+            </div>
+        </header>
+        
+        <div class="months-container">
+            <!-- Mes 1 -->
+            <div class="month-card" data-month="1">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon"><i class="fas fa-heart"></i></div>
+                        <div class="month-number">01</div>
+                        <div class="month-title">Nuestro Inicio</div>
+                        <div class="month-date">Noviembre 2024</div>
+                        <div class="card-hint">Haz clic para abrir</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="gallery">
+                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=300&q=80')" data-text="Nuestra primera cita"></div>
+                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?w=300&q=80')" data-text="El primer regalo"></div>
+                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80')" data-text="Primera selfie juntos"></div>
+                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=300&q=80')" data-text="Primera llamada"></div>
+                        </div>
+                        <div class="memory-text">
+                            <p>Noviembre marcó el inicio de nuestra historia. Recuerdo nuestra primera cita, cuando nos conocimos en persona después de semanas de hablar. Desde ese momento supe que quería pasar muchos más momentos a tu lado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mes 2 -->
+            <div class="month-card" data-month="2">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon"><i class="fas fa-gift"></i></div>
+                        <div class="month-number">02</div>
+                        <div class="month-title">Primera Navidad</div>
+                        <div class="month-date">Diciembre 2024</div>
+                        <div class="card-hint">Haz clic para abrir</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="gallery">
+                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=300&q=80')" data-text="Árbol de Navidad"></div>
+                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1574359411659-619743e1496c?w=300&q=80')" data-text="Cena navideña"></div>
+                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1519458349-a4336c44222d?w=300&q=80')" data-text="Regalo especial"></div>
+                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1577720643363-0fe51cc80f6f?w=300&q=80')" data-text="Nochebuena"></div>
+                        </div>
+                        <div class="memory-text">
+                            <p>Diciembre nos trajo nuestra primera Navidad juntos. Celebrar estas fechas especiales contigo me hizo darme cuenta de que quería pasar todas las navidades de mi vida a tu lado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agrega más meses aquí siguiendo el mismo patrón -->
+            <!-- Mes 3 a 12... -->
+
+        </div>
+        
+        <div class="navigation">
+            <button class="nav-btn" id="prev-btn"><i class="fas fa-arrow-left"></i> Anterior</button>
+            <button class="nav-btn" id="next-btn">Siguiente <i class="fas fa-arrow-right"></i></button>
+        </div>
+        
+        <footer>
+            <p class="love-message">Este es solo el comienzo de nuestra historia. Espero pasar muchos años más a tu lado.</p>
+            <p>Te amo con todo mi corazón <span class="heart">❤</span></p>
+        </footer>
+    </div>
 
     <script>
-        // TODO TU CÓDIGO JAVASCRIPT ACTUAL
+        // Funcionalidad básica de las cartas
+        const monthCards = document.querySelectorAll('.month-card');
+        
+        monthCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // Cerrar otras cartas
+                monthCards.forEach(otherCard => {
+                    if (otherCard !== this) {
+                        otherCard.classList.remove('active');
+                    }
+                });
+                // Abrir/cerrar esta carta
+                this.classList.toggle('active');
+            });
+        });
+
+        // Navegación entre meses
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        let currentMonth = 1;
+        const totalMonths = 12;
+        
+        function showMonth(month) {
+            monthCards.forEach(card => {
+                if (parseInt(card.getAttribute('data-month')) === month) {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        }
+        
+        prevBtn.addEventListener('click', () => {
+            currentMonth = currentMonth > 1 ? currentMonth - 1 : totalMonths;
+            showMonth(currentMonth);
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            currentMonth = currentMonth < totalMonths ? currentMonth + 1 : 1;
+            showMonth(currentMonth);
+        });
+
+        // Efecto de aparición al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            monthCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
     </script>
 </body>
 </html>

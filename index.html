@@ -1,14 +1,12 @@
+Te paso mi código
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestro Primer Año Juntos - Para María</title>
-    <meta name="description" content="Una galería de amor interactiva con nuestros recuerdos más especiales">
-    
+    <title>Nuestro Primer Año Juntos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
     <style>
         * {
             margin: 0;
@@ -34,7 +32,7 @@
             text-align: center;
             padding: 40px 20px;
             margin-bottom: 40px;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             position: relative;
@@ -52,14 +50,14 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             color: #e91e63;
             margin-bottom: 15px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .subtitle {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: #673ab7;
             margin-bottom: 20px;
         }
@@ -86,25 +84,26 @@
 
         .months-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
         }
 
         .month-card {
             background: white;
             border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: visible;
             transition: all 0.4s ease;
             position: relative;
-            height: 320px;
+            height: 350px;
             perspective: 1000px;
+            z-index: 1;
         }
 
         .month-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
 
         .card-inner {
@@ -138,83 +137,311 @@
         .card-front {
             background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
             color: white;
-            text-align: center;
         }
 
         .card-back {
             background: white;
             color: #333;
             transform: rotateY(180deg);
-            overflow-y: auto;
+            overflow: visible;
         }
 
         .month-number {
-            font-size: 3.5rem;
+            font-size: 5rem;
             font-weight: bold;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .month-title {
-            font-size: 1.6rem;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            margin-bottom: 15px;
             text-align: center;
         }
 
         .month-date {
             font-style: italic;
-            margin-bottom: 15px;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.9rem;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-size: 3rem;
+            margin-bottom: 20px;
             color: rgba(255, 255, 255, 0.9);
         }
 
         .card-hint {
             position: absolute;
             bottom: 15px;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: rgba(255, 255, 255, 0.8);
+        }
+
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
 
         .gallery {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin: 12px 0;
+            gap: 10px;
+            margin: 15px 0;
         }
 
         .gallery-item {
             border-radius: 8px;
             overflow: hidden;
-            height: 70px;
+            height: 80px;
             background-color: #f5f5f5;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #999;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             background-size: cover;
             background-position: center;
             position: relative;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
-            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .month-card.active .gallery-item {
+            position: fixed !important;
+            width: 200px !important;
+            height: 250px !important;
+            background: white !important;
+            border-radius: 4px !important;
+            padding: 15px 15px 60px 15px !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+            cursor: grab !important;
+            z-index: 1000 !important;
+            transition: none !important;
+        }
+
+        .month-card.active .gallery-item:active {
+            cursor: grabbing !important;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4) !important;
+        }
+
+        .month-card.active .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 60px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 2px;
+            pointer-events: none;
+        }
+
+        .month-card.active .gallery-item::after {
+            content: attr(data-text);
+            position: absolute;
+            bottom: 20px;
+            left: 15px;
+            right: 15px;
+            font-family: 'Caveat', cursive;
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            pointer-events: none;
+        }
+
+        .month-card[data-month="1"] .gallery-item:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=500&q=80');
+        }
+        .month-card[data-month="1"] .gallery-item:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?w=500&q=80');
+        }
+        .month-card[data-month="1"] .gallery-item:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&q=80');
+        }
+        .month-card[data-month="1"] .gallery-item:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500&q=80');
+        }
+
+        .month-card[data-month="2"] .gallery-item:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=500&q=80');
+        }
+        .month-card[data-month="2"] .gallery-item:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1574359411659-619743e1496c?w=500&q=80');
+        }
+        .month-card[data-month="2"] .gallery-item:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1519458349-a4336c44222d?w=500&q=80');
+        }
+        .month-card[data-month="2"] .gallery-item:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1577720643363-0fe51cc80f6f?w=500&q=80');
+        }
+
+        .month-card[data-month="3"] .gallery-item:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500&q=80');
+        }
+        .month-card[data-month="3"] .gallery-item:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?w=500&q=80');
+        }
+        .month-card[data-month="3"] .gallery-item:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1574359411659-619743e1496c?w=500&q=80');
+        }
+        .month-card[data-month="3"] .gallery-item:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1542751110-97427bbecf20?w=500&q=80');
+        }
+
+        .month-card[data-month="4"] .gallery-item:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80');
+        }
+        .month-card[data-month="4"] .gallery-item:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=500&q=80');
+        }
+        .month-card[data-month="4"] .gallery-item:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500&q=80');
+        }
+        .month-card[data-month="4"] .gallery-item:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1489599809505-f2d4cbd5a0c9?w=500&q=80');
+        }
+
+        .month-card[data-month="5"] .gallery-item:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1551632811-561732d1e306?w=500&q=80');
+        }
+        .month-card[data-month="5"] .gallery-item:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80');
+        }
+        .month-card[data-month="5"] .gallery-item:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=500&q=80');
+        }
+        .month-card[data-month="5"] .gallery-item:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=500&q=80');
+        }
+
+        .month-card[data-month="6"] .gallery-item:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=500&q=80');
+        }
+        .month-card[data-month="6"] .gallery-item:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&q=80');
+        }
+        .month-card[data-month="6"] .gallery-item:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80');
+        }
+        .month-card[data-month="6"] .gallery-item:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1551029506-0807df4e2031?w=500&q=80');
+        }
+
+        .month-card[data-month="7"] .gallery-item:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500&q=80');
+        }
+        .month-card[data-month="7"] .gallery-item:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?w=500&q=80');
+        }
+        .month-card[data-month="7"] .gallery-item:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1574359411659-619743e1496c?w=500&q=80');
+        }
+        .month-card[data-month="7"] .gallery-item:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1542751110-97427bbecf20?w=500&q=80');
+        }
+
+        .month-card[data-month="8"] .gallery-item:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80');
+        }
+        .month-card[data-month="8"] .gallery-item:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=500&q=80');
+        }
+        .month-card[data-month="8"] .gallery-item:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500&q=80');
+        }
+        .month-card[data-month="8"] .gallery-item:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1489599809505-f2d4cbd5a0c9?w=500&q=80');
+        }
+
+        .month-card[data-month="9"] .gallery-item:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1551632811-561732d1e306?w=500&q=80');
+        }
+        .month-card[data-month="9"] .gallery-item:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80');
+        }
+        .month-card[data-month="9"] .gallery-item:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1574269909862-7e1d70bb8078?w=500&q=80');
+        }
+        .month-card[data-month="9"] .gallery-item:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=500&q=80');
+        }
+
+        .month-card[data-month="10"] .gallery-item:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=500&q=80');
+        }
+        .month-card[data-month="10"] .gallery-item:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&q=80');
+        }
+        .month-card[data-month="10"] .gallery-item:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80');
+        }
+        .month-card[data-month="10"] .gallery-item:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1551029506-0807df4e2031?w=500&q=80');
+        }
+
+        .month-card[data-month="11"] .gallery-item:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=500&q=80');
+        }
+        .month-card[data-month="11"] .gallery-item:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?w=500&q=80');
+        }
+        .month-card[data-month="11"] .gallery-item:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1574359411659-619743e1496c?w=500&q=80');
+        }
+        .month-card[data-month="11"] .gallery-item:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1542751110-97427bbecf20?w=500&q=80');
+        }
+
+        .month-card[data-month="12"] .gallery-item:nth-child(1)::before {
+            background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80');
+        }
+        .month-card[data-month="12"] .gallery-item:nth-child(2)::before {
+            background-image: url('https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?w=500&q=80');
+        }
+        .month-card[data-month="12"] .gallery-item:nth-child(3)::before {
+            background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500&q=80');
+        }
+        .month-card[data-month="12"] .gallery-item:nth-child(4)::before {
+            background-image: url('https://images.unsplash.com/photo-1489599809505-f2d4cbd5a0c9?w=500&q=80');
+        }
+
+        .month-card.active .gallery-item:nth-child(1) {
+            transform: rotate(-5deg) !important;
+        }
+
+        .month-card.active .gallery-item:nth-child(2) {
+            transform: rotate(3deg) !important;
+        }
+
+        .month-card.active .gallery-item:nth-child(3) {
+            transform: rotate(-3deg) !important;
+        }
+
+        .month-card.active .gallery-item:nth-child(4) {
+            transform: rotate(5deg) !important;
         }
 
         .memory-text {
-            margin-top: 12px;
-            font-size: 0.9rem;
-            line-height: 1.5;
+            margin-top: 15px;
+            font-size: 1rem;
+            line-height: 1.6;
             color: #555;
             background-color: #f9f9f9;
-            padding: 12px;
+            padding: 15px;
             border-radius: 8px;
             border-left: 4px solid #e91e63;
+            z-index: 1;
+            position: relative;
+            pointer-events: auto;
         }
 
         .navigation {
@@ -238,64 +465,60 @@
 
         .nav-btn:hover {
             background: #c2185b;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
 
         footer {
             text-align: center;
-            padding: 30px 20px;
+            padding: 40px 20px;
             margin-top: 40px;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.7);
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
 
         .love-message {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
             color: #e91e63;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .subtitle {
-                font-size: 1.1rem;
-            }
-            
+        @media screen and (max-width: 768px) {
             .months-container {
                 grid-template-columns: 1fr;
-                gap: 20px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
             }
             
             .month-card {
-                height: 280px;
+                height: 300px;
             }
             
-            .month-number {
-                font-size: 3rem;
+            .month-card.active .gallery-item {
+                width: 160px !important;
+                height: 210px !important;
             }
             
-            .month-title {
-                font-size: 1.4rem;
+            .month-card.active .gallery-item:nth-child(1) {
+                top: 15% !important;
+                left: 5% !important;
             }
-        }
 
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
+            .month-card.active .gallery-item:nth-child(2) {
+                top: 20% !important;
+                left: 55% !important;
             }
-            
-            header {
-                padding: 25px 15px;
-                margin-bottom: 25px;
+
+            .month-card.active .gallery-item:nth-child(3) {
+                top: 55% !important;
+                left: 3% !important;
             }
-            
-            h1 {
-                font-size: 1.8rem;
+
+            .month-card.active .gallery-item:nth-child(4) {
+                top: 60% !important;
+                left: 57% !important;
             }
         }
     </style>
@@ -307,7 +530,7 @@
             <p class="subtitle">12 meses de recuerdos inolvidables</p>
             <div class="intro-text">
                 <p>Querida <strong>María</strong>,</p>
-                <p>Este año a tu lado ha sido el más maravilloso de mi vida. Cada mes hemos creado recuerdos que atesoraré para siempre.</p>
+                <p>Este año a tu lado ha sido el más maravilloso de mi vida. Cada mes hemos creado recuerdos que atesoraré para siempre. Esta página es un pequeño tributo a nuestro primer año juntos, lleno de amor, risas y momentos especiales.</p>
                 <p>Con todo mi amor, <strong>Carlos</strong></p>
             </div>
         </header>
@@ -324,11 +547,13 @@
                         <div class="card-hint">Haz clic para abrir</div>
                     </div>
                     <div class="card-back">
-                        <div class="gallery">
-                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?w=300&q=80')" data-text="Nuestra primera cita"></div>
-                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1542037104857-ffbb0b9155fb?w=300&q=80')" data-text="El primer regalo"></div>
-                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&q=80')" data-text="Primera selfie juntos"></div>
-                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=300&q=80')" data-text="Primera llamada"></div>
+                        <div class="gallery-container">
+                            <div class="gallery">
+                                <div class="gallery-item" data-text="Nuestra primera cita en ese café acogedor"></div>
+                                <div class="gallery-item" data-text="El primer regalo que te di"></div>
+                                <div class="gallery-item" data-text="Nuestra primera selfie juntos"></div>
+                                <div class="gallery-item" data-text="Nuestra primera llamada telefónica"></div>
+                            </div>
                         </div>
                         <div class="memory-text">
                             <p>Noviembre marcó el inicio de nuestra historia. Recuerdo nuestra primera cita, cuando nos conocimos en persona después de semanas de hablar. Desde ese momento supe que quería pasar muchos más momentos a tu lado.</p>
@@ -336,7 +561,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <!-- Mes 2 -->
             <div class="month-card" data-month="2">
                 <div class="card-inner">
@@ -348,11 +573,13 @@
                         <div class="card-hint">Haz clic para abrir</div>
                     </div>
                     <div class="card-back">
-                        <div class="gallery">
-                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=300&q=80')" data-text="Árbol de Navidad"></div>
-                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1574359411659-619743e1496c?w=300&q=80')" data-text="Cena navideña"></div>
-                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1519458349-a4336c44222d?w=300&q=80')" data-text="Regalo especial"></div>
-                            <div class="gallery-item" style="background-image: url('https://images.unsplash.com/photo-1577720643363-0fe51cc80f6f?w=300&q=80')" data-text="Nochebuena"></div>
+                        <div class="gallery-container">
+                            <div class="gallery">
+                                <div class="gallery-item" data-text="Nuestro primer árbol de Navidad juntos"></div>
+                                <div class="gallery-item" data-text="La cena navideña con nuestras familias"></div>
+                                <div class="gallery-item" data-text="El regalo especial que te hice a mano"></div>
+                                <div class="gallery-item" data-text="Nuestra primera Nochebuena juntos"></div>
+                            </div>
                         </div>
                         <div class="memory-text">
                             <p>Diciembre nos trajo nuestra primera Navidad juntos. Celebrar estas fechas especiales contigo me hizo darme cuenta de que quería pasar todas las navidades de mi vida a tu lado.</p>
@@ -360,10 +587,266 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Agrega más meses aquí siguiendo el mismo patrón -->
-            <!-- Mes 3 a 12... -->
-
+            
+            <!-- Mes 3 -->
+            <div class="month-card" data-month="3">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon"><i class="fas fa-fireworks"></i></div>
+                        <div class="month-number">03</div>
+                        <div class="month-title">Año Nuevo Juntos</div>
+                        <div class="month-date">Enero 2025</div>
+                        <div class="card-hint">Haz clic para abrir</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="gallery-container">
+                            <div class="gallery">
+                                <div class="gallery-item" data-text="Recibiendo el año nuevo con un abrazo"></div>
+                                <div class="gallery-item" data-text="Nuestros propósitos de año nuevo"></div>
+                                <div class="gallery-item" data-text="La primera lluvia de estrellas del año"></div>
+                                <div class="gallery-item" data-text="Conversación sobre nuestros sueños"></div>
+                            </div>
+                        </div>
+                        <div class="memory-text">
+                            <p>Enero comenzó con la promesa de un año lleno de amor. Recibir el 2025 contigo fue mágico, sabiendo que cada día a tu lado sería una aventura.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mes 4 -->
+            <div class="month-card" data-month="4">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon"><i class="fas fa-heart"></i></div>
+                        <div class="month-number">04</div>
+                        <div class="month-title">San Valentín</div>
+                        <div class="month-date">Febrero 2025</div>
+                        <div class="card-hint">Haz clic para abrir</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="gallery-container">
+                            <div class="gallery">
+                                <div class="gallery-item" data-text="La sorpresa romántica que preparé"></div>
+                                <div class="gallery-item" data-text="Las cartas de amor que intercambiamos"></div>
+                                <div class="gallery-item" data-text="El baile improvisado en la cocina"></div>
+                                <div class="gallery-item" data-text="Tu reacción al ver mi regalo"></div>
+                            </div>
+                        </div>
+                        <div class="memory-text">
+                            <p>Febrero nos regaló nuestro primer San Valentín juntos. Demostrarnos nuestro amor de maneras especiales me recordó lo afortunado que soy de tenerte.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mes 5 -->
+            <div class="month-card" data-month="5">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon"><i class="fas fa-umbrella-beach"></i></div>
+                        <div class="month-number">05</div>
+                        <div class="month-title">Primer Viaje</div>
+                        <div class="month-date">Marzo 2025</div>
+                        <div class="card-hint">Haz clic para abrir</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="gallery-container">
+                            <div class="gallery">
+                                <div class="gallery-item" data-text="Nuestra primera maleta hecha juntos"></div>
+                                <div class="gallery-item" data-text="El atardecer en la playa"></div>
+                                <div class="gallery-item" data-text="Probando comida local"></div>
+                                <div class="gallery-item" data-text="Noche bajo las estrellas"></div>
+                            </div>
+                        </div>
+                        <div class="memory-text">
+                            <p>Marzo nos llevó a nuestra primera aventura viajando juntos. Descubrir nuevos lugares a tu lado me mostró que contigo cualquier lugar se convierte en hogar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mes 6 -->
+            <div class="month-card" data-month="6">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon"><i class="fas fa-birthday-cake"></i></div>
+                        <div class="month-number">06</div>
+                        <div class="month-title">Tu Cumpleaños</div>
+                        <div class="month-date">Abril 2025</div>
+                        <div class="card-hint">Haz clic para abrir</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="gallery-container">
+                            <div class="gallery">
+                                <div class="gallery-item" data-text="La sorpresa de cumpleaños"></div>
+                                <div class="gallery-item" data-text="El pastel que horneé para ti"></div>
+                                <div class="gallery-item" data-text="Tus amigos cantándote"></div>
+                                <div class="gallery-item" data-text="El regalo especial"></div>
+                            </div>
+                        </div>
+                        <div class="memory-text">
+                            <p>Abril fue el mes de celebrarte. Tu cumpleaños me dio la oportunidad de demostrarte lo especial que eres y lo importante que es tu felicidad para mí.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mes 7 -->
+            <div class="month-card" data-month="7">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon"><i class="fas fa-hiking"></i></div>
+                        <div class="month-number">07</div>
+                        <div class="month-title">Aventuras al Aire Libre</div>
+                        <div class="month-date">Mayo 2025</div>
+                        <div class="card-hint">Haz clic para abrir</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="gallery-container">
+                            <div class="gallery">
+                                <div class="gallery-item" data-text="Caminata por la montaña"></div>
+                                <div class="gallery-item" data-text="Acampando bajo las estrellas"></div>
+                                <div class="gallery-item" data-text="Picnic junto al lago"></div>
+                                <div class="gallery-item" data-text="Foto espontánea en la naturaleza"></div>
+                            </div>
+                        </div>
+                        <div class="memory-text">
+                            <p>Mayo nos conectó con la naturaleza. Cada aventura al aire libre reforzó nuestro vínculo y me mostró que juntos podemos conquistar cualquier montaña.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mes 8 -->
+            <div class="month-card" data-month="8">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon"><i class="fas fa-music"></i></div>
+                        <div class="month-number">08</div>
+                        <div class="month-title">Nuestro Primer Concierto</div>
+                        <div class="month-date">Junio 2025</div>
+                        <div class="card-hint">Haz clic para abrir</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="gallery-container">
+                            <div class="gallery">
+                                <div class="gallery-item" data-text="Cantando nuestra canción favorita"></div>
+                                <div class="gallery-item" data-text="Bailando sin importar quién nos veía"></div>
+                                <div class="gallery-item" data-text="Momentos de complicidad"></div>
+                                <div class="gallery-item" data-text="Viaje de regreso a casa"></div>
+                            </div>
+                        </div>
+                        <div class="memory-text">
+                            <p>Junio nos regaló la magia de la música en vivo. Nuestro primer concierto juntos se convirtió en una noche inolvidable donde cada canción sonaba como si fuera escrita para nosotros.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mes 9 -->
+            <div class="month-card" data-month="9">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon"><i class="fas fa-umbrella-beach"></i></div>
+                        <div class="month-number">09</div>
+                        <div class="month-title">Verano Juntos</div>
+                        <div class="month-date">Julio 2025</div>
+                        <div class="card-hint">Haz clic para abrir</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="gallery-container">
+                            <div class="gallery">
+                                <div class="gallery-item" data-text="Días en la playa"></div>
+                                <div class="gallery-item" data-text="Noches de verano con helado"></div>
+                                <div class="gallery-item" data-text="Tarde de piscina y risas"></div>
+                                <div class="gallery-item" data-text="Atardeceres pintando el cielo"></div>
+                            </div>
+                        </div>
+                        <div class="memory-text">
+                            <p>Julio nos bañó con el calor del verano y nuestro amor. Cada día de sol era una excusa para crear nuevos recuerdos y disfrutar de la simple felicidad de estar juntos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mes 10 -->
+            <div class="month-card" data-month="10">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon"><i class="fas fa-star"></i></div>
+                        <div class="month-number">10</div>
+                        <div class="month-title">Celebrando Logros</div>
+                        <div class="month-date">Agosto 2025</div>
+                        <div class="card-hint">Haz clic para abrir</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="gallery-container">
+                            <div class="gallery">
+                                <div class="gallery-item" data-text="Tu graduación"></div>
+                                <div class="gallery-item" data-text="Cena de celebración"></div>
+                                <div class="gallery-item" data-text="Abrazo lleno de emoción"></div>
+                                <div class="gallery-item" data-text="Carta de admiración"></div>
+                            </div>
+                        </div>
+                        <div class="memory-text">
+                            <p>Agosto fue testigo de tus grandes logros. Verte triunfar me llenó de un orgullo indescriptible y me recordó lo increíblemente talentosa que eres.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mes 11 -->
+            <div class="month-card" data-month="11">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon"><i class="fas fa-leaf"></i></div>
+                        <div class="month-number">11</div>
+                        <div class="month-title">Nuevos Comienzos</div>
+                        <div class="month-date">Septiembre 2025</div>
+                        <div class="card-hint">Haz clic para abrir</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="gallery-container">
+                            <div class="gallery">
+                                <div class="gallery-item" data-text="Primer día en el nuevo trabajo"></div>
+                                <div class="gallery-item" data-text="Decorando nuestro espacio"></div>
+                                <div class="gallery-item" data-text="Mañanas de otoño con café"></div>
+                                <div class="gallery-item" data-text="Tranquilidad de estar juntos"></div>
+                            </div>
+                        </div>
+                        <div class="memory-text">
+                            <p>Septiembre nos trajo nuevos comienzos y oportunidades. A tu lado, cada cambio se siente como una aventura emocionante en lugar de un desafío.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mes 12 -->
+            <div class="month-card" data-month="12">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="card-icon"><i class="fas fa-glass-cheers"></i></div>
+                        <div class="month-number">12</div>
+                        <div class="month-title">Nuestro Aniversario</div>
+                        <div class="month-date">Octubre 2025</div>
+                        <div class="card-hint">Haz clic para abrir</div>
+                    </div>
+                    <div class="card-back">
+                        <div class="gallery-container">
+                            <div class="gallery">
+                                <div class="gallery-item" data-text="Cena especial reviviendo momentos"></div>
+                                <div class="gallery-item" data-text="Brindis por nuestro amor"></div>
+                                <div class="gallery-item" data-text="Regalo de amor eterno"></div>
+                                <div class="gallery-item" data-text="Mirada que lo decía todo"></div>
+                            </div>
+                        </div>
+                        <div class="memory-text">
+                            <p>Octubre marcó nuestro primer año juntos. Celebrar doce meses de amor, risas y crecimiento me confirmó que eres la persona con quien quiero pasar el resto de mi vida.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div class="navigation">
@@ -378,22 +861,160 @@
     </div>
 
     <script>
-        // Funcionalidad básica de las cartas
         const monthCards = document.querySelectorAll('.month-card');
+        const galleryItems = document.querySelectorAll('.gallery-item');
         
+        // Abrir cartas - solo con clic en el card-inner (la parte frontal)
         monthCards.forEach(card => {
-            card.addEventListener('click', function() {
-                // Cerrar otras cartas
-                monthCards.forEach(otherCard => {
-                    if (otherCard !== this) {
-                        otherCard.classList.remove('active');
-                    }
-                });
-                // Abrir/cerrar esta carta
-                this.classList.toggle('active');
+            const cardInner = card.querySelector('.card-inner');
+            cardInner.addEventListener('click', function(e) {
+                // Solo abrir si se hace clic en la parte frontal y no está ya abierta
+                if (!card.classList.contains('active')) {
+                    card.classList.add('active');
+                }
             });
         });
-
+        
+        // Sistema de arrastre ultra preciso - no se mueve hasta que arrastres
+        let activePolaroid = null;
+        let startX = 0;
+        let startY = 0;
+        let offsetX = 0;
+        let offsetY = 0;
+        let hasMoved = false;
+        let initialPositionsSet = {};
+        
+        function setInitialPosition(item, index) {
+            const parentCard = item.closest('.month-card');
+            const monthNum = parentCard.getAttribute('data-month');
+            const key = `${monthNum}-${index}`;
+            
+            if (!initialPositionsSet[key]) {
+                const positions = [
+                    { top: '20%', left: '10%' },
+                    { top: '25%', left: '60%' },
+                    { top: '55%', left: '8%' },
+                    { top: '60%', left: '62%' }
+                ];
+                
+                item.style.top = positions[index].top;
+                item.style.left = positions[index].left;
+                item.style.right = 'auto';
+                item.style.bottom = 'auto';
+                item.style.transform = item.style.transform || '';
+                
+                initialPositionsSet[key] = true;
+            }
+        }
+        
+        function startDrag(e) {
+            const parentCard = this.closest('.month-card');
+            if (!parentCard || !parentCard.classList.contains('active')) return;
+            
+            activePolaroid = this;
+            hasMoved = false;
+            
+            // Guardar posición del cursor al inicio
+            if (e.type === 'mousedown') {
+                startX = e.clientX;
+                startY = e.clientY;
+            } else if (e.type === 'touchstart') {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            }
+            
+            // Obtener posición actual del elemento
+            const rect = this.getBoundingClientRect();
+            
+            // Guardar el offset desde el punto de clic hasta la esquina del elemento
+            offsetX = startX - rect.left;
+            offsetY = startY - rect.top;
+            
+            this.style.zIndex = '2000';
+            this.style.cursor = 'grabbing';
+            document.body.style.userSelect = 'none';
+            
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        function doDrag(e) {
+            if (!activePolaroid) return;
+            
+            let currentX, currentY;
+            if (e.type === 'mousemove') {
+                currentX = e.clientX;
+                currentY = e.clientY;
+            } else if (e.type === 'touchmove') {
+                currentX = e.touches[0].clientX;
+                currentY = e.touches[0].clientY;
+            }
+            
+            // Solo mover si el cursor se ha movido
+            if (!hasMoved && (Math.abs(currentX - startX) > 2 || Math.abs(currentY - startY) > 2)) {
+                hasMoved = true;
+                // Convertir a posición absoluta con valores en píxeles
+                const rect = activePolaroid.getBoundingClientRect();
+                activePolaroid.style.left = rect.left + 'px';
+                activePolaroid.style.top = rect.top + 'px';
+                activePolaroid.style.right = 'auto';
+                activePolaroid.style.bottom = 'auto';
+            }
+            
+            if (hasMoved) {
+                // Calcular nueva posición basada en el movimiento del cursor
+                const newX = currentX - offsetX;
+                const newY = currentY - offsetY;
+                
+                activePolaroid.style.left = newX + 'px';
+                activePolaroid.style.top = newY + 'px';
+            }
+            
+            e.preventDefault();
+        }
+        
+        function stopDrag(e) {
+            if (!activePolaroid) return;
+            
+            activePolaroid.style.zIndex = '1000';
+            activePolaroid.style.cursor = 'grab';
+            document.body.style.userSelect = '';
+            activePolaroid = null;
+            hasMoved = false;
+            
+            e.preventDefault();
+        }
+        
+        // Inicializar posiciones cuando se abre una carta
+        monthCards.forEach(card => {
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'class') {
+                        if (card.classList.contains('active')) {
+                            const items = card.querySelectorAll('.gallery-item');
+                            items.forEach((item, index) => {
+                                setInitialPosition(item, index);
+                            });
+                        }
+                    }
+                });
+            });
+            
+            observer.observe(card, { attributes: true });
+        });
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('mousedown', startDrag);
+            item.addEventListener('touchstart', startDrag, { passive: false });
+        });
+        
+        document.addEventListener('mousemove', doDrag);
+        document.addEventListener('touchmove', doDrag, { passive: false });
+        
+        document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchend', stopDrag);
+        document.addEventListener('touchcancel', stopDrag);
+        
         // Navegación entre meses
         const prevBtn = document.getElementById('prev-btn');
         const nextBtn = document.getElementById('next-btn');
@@ -417,8 +1038,8 @@
             currentMonth = currentMonth < totalMonths ? currentMonth + 1 : 1;
             showMonth(currentMonth);
         });
-
-        // Efecto de aparición al cargar
+        
+        // Efecto de aparición gradual
         document.addEventListener('DOMContentLoaded', function() {
             monthCards.forEach((card, index) => {
                 card.style.opacity = '0';
@@ -428,7 +1049,7 @@
                     card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
-                }, 100 * index);
+                }, 200 * index);
             });
         });
     </script>
